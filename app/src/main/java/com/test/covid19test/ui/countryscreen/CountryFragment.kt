@@ -60,7 +60,7 @@ class CountryFragment : Fragment(R.layout.fragment_country) {
                     .subscribe({ result ->
                         showList(result)
                         showChart(result)
-                        //Log.e("result", result.timeseries)
+
                     }, { error ->
                         error.printStackTrace()
                     })
@@ -73,18 +73,19 @@ class CountryFragment : Fragment(R.layout.fragment_country) {
     }
 
 
-    private fun showChart(list: ArrayList<TimeseriesItem>){
+    private fun showChart(list: ArrayList<TimeseriesItem>) {
         var reverseList = ArrayList<TimeseriesItem>(list)
         reverseList.reverse()
+        chart.visibility = View.VISIBLE
 
-       chart.xAxis.disableAxisLineDashedLine()
+        chart.xAxis.disableAxisLineDashedLine()
         chart.xAxis.isEnabled = false
 
         //legend
         val l = chart.legend
-        l.formSize = 20f
-        l.textSize = 15f
-        l.textColor = Color.WHITE
+        l.formSize = 13f
+        l.textSize = 11f
+        l.textColor = Color.BLACK
         l.formToTextSpace = 5f
         l.xEntrySpace = 10f
         //property
@@ -96,12 +97,11 @@ class CountryFragment : Fragment(R.layout.fragment_country) {
         var confirmedList = ArrayList<Entry>()
         var deathList = ArrayList<Entry>()
         var recoveredList = ArrayList<Entry>()
-        for (i in 0..reverseList.size - 1){
-            confirmedList.add(Entry(i.toFloat(), reverseList[i].confirmed.toFloat()) )
-            deathList.add(Entry(i.toFloat(), reverseList[i].deaths.toFloat()) )
-            recoveredList.add(Entry(i.toFloat(), reverseList[i].recovered.toFloat()) )
+        for (i in 0..reverseList.size - 1) {
+            confirmedList.add(Entry(i.toFloat(), reverseList[i].confirmed.toFloat()))
+            deathList.add(Entry(i.toFloat(), reverseList[i].deaths.toFloat()))
+            recoveredList.add(Entry(i.toFloat(), reverseList[i].recovered.toFloat()))
         }
-
 
         val dataSet1 = LineDataSet(confirmedList, "Заразившиеся")
         dataSet1.color = Color.RED
